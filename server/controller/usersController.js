@@ -1,10 +1,10 @@
+var Sequelize = require('sequelize');
 var sequelize = require('../sequelizeConfig').sequelizeConfig;
-var models = require("../models/models")();
-var users = models.users;
-exports.getusers = async (req, res) => {
-    query="select * from tbl_users";
-    users.query(query);
-    console.log(query);
-    // if (rows.length > 0) res.status(200).send({ status: "OK", message: "Record found!", data: rows, count });
-    // else res.status(200).send({ status: "FAIL", message: "No data found!" });
+exports.userlogin =async  (req, res) => {
+    if(req.body.email=='') res.status(200).send({status : "FAIL",message: "Email is required"})
+    if(req.body.password=='') res.status(200).send({status : "FAIL",message: "Password is required"})
+    query = "select * from tbl_users where email='"+req.body.email+"' and password='"+req.body.password+"'";
+    result = await sequelize.query(query,{ type: Sequelize.QueryTypes.SELECT });
+    if (result.length > 0) res.status(200).send({ status: "OK", message: "Record found!", data: result });
+    else res.status(200).send({ status: "FAIL", message: "No data found!" });
 }

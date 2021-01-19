@@ -3,8 +3,12 @@ var usrroute = express.Router();
 
 var usercontroller = require('../controller/usersController');
 var router = () => {
-    usrroute.route('/getusers').post(function (req, res) {
-        usercontroller.signup(req, res);
+    usrroute.route('/userlogin').post(function (req, res) {
+        usercontroller.userlogin(req, res);
+
+    })
+    usrroute.route('/usersignup').post(function (req, res) {
+        usercontroller.usersignup(req, res);
 
     })
     return usrroute;
