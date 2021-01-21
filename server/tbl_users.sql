@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 21, 2021 at 08:55 AM
+-- Generation Time: Jan 21, 2021 at 01:40 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.2.34
 
@@ -32,7 +32,7 @@ CREATE TABLE `tbl_users` (
   `firstName` varchar(50) NOT NULL,
   `lastName` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `phoneno` varchar(50) NOT NULL,
+  `phoneNumber` varchar(50) NOT NULL,
   `gender` varchar(50) NOT NULL,
   `age` varchar(20) NOT NULL,
   `password` varchar(50) NOT NULL,
@@ -49,7 +49,7 @@ CREATE TABLE `tbl_users` (
   `emailVerificationKey` varchar(300) NOT NULL,
   `isVerified` tinyint(1) NOT NULL,
   `forgotPasswordKey` varchar(300) NOT NULL,
-  `role` tinyint(1) NOT NULL,
+  `role` varchar(10) NOT NULL,
   `allowNotification` tinyint(1) NOT NULL,
   `isDeleted` tinyint(1) NOT NULL,
   `isActive` tinyint(1) NOT NULL,
@@ -62,9 +62,8 @@ CREATE TABLE `tbl_users` (
 -- Dumping data for table `tbl_users`
 --
 
-INSERT INTO `tbl_users` (`id`, `firstName`, `lastName`, `email`, `phoneno`, `gender`, `age`, `password`, `imageUrl`, `googleId`, `fbId`, `ip`, `country`, `region`, `zip`, `latitude`, `longitude`, `otp`, `emailVerificationKey`, `isVerified`, `forgotPasswordKey`, `role`, `allowNotification`, `isDeleted`, `isActive`, `createdOn`, `createdAt`, `updatedAt`) VALUES
-(1, 'Abdullah', 'Hasham', 'abd@gmail.com', '1234', 'Male', '12', '123', '', '', '', '', '', '', '', '', '', '', '', 1, '', 0, 0, 0, 1, '0000-00-00', '0000-00-00', '0000-00-00'),
-(2, 'Abdullah', 'Hasham', 'abd1@gmail.com', '1234', 'Male', '12', '123', '', '', '', '', '', '', '', '', '', '', '', 0, '', 0, 0, 0, 0, '0000-00-00', '0000-00-00', '0000-00-00');
+INSERT INTO `tbl_users` (`id`, `firstName`, `lastName`, `email`, `phoneNumber`, `gender`, `age`, `password`, `imageUrl`, `googleId`, `fbId`, `ip`, `country`, `region`, `zip`, `latitude`, `longitude`, `otp`, `emailVerificationKey`, `isVerified`, `forgotPasswordKey`, `role`, `allowNotification`, `isDeleted`, `isActive`, `createdOn`, `createdAt`, `updatedAt`) VALUES
+(4, 'Abdullah', 'Hasham', 'abc@gmail.com', '3102666910', 'Male', '26', '123', 'www.abc.com', '', '', '', 'Pakistan', 'Orangi', '', '', '', '', '', 0, '', 'BUYER', 0, 0, 0, '0000-00-00', '0000-00-00', '0000-00-00');
 
 --
 -- Indexes for dumped tables
@@ -84,7 +83,7 @@ ALTER TABLE `tbl_users`
 -- AUTO_INCREMENT for table `tbl_users`
 --
 ALTER TABLE `tbl_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
