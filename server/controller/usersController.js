@@ -1,6 +1,7 @@
 var Sequelize = require('sequelize');
 var sequelize = require('../sequelizeConfig').sequelizeConfig;
-exports.buyersignup=async(req,res)=>{
+var nodemailer = require('nodemailer');
+exports.buyersignup = async (req, res) => {
     if (req.body.email == '') res.status(200).send({ status: "FAIL", message: "Email is required" })
     if (req.body.password == '') res.status(200).send({ status: "FAIL", message: "Password is required" })
     if (req.body.imageUrl == '') res.status(200).send({ status: "FAIL", message: "Image Url is required" })
@@ -11,15 +12,40 @@ exports.buyersignup=async(req,res)=>{
     if (req.body.age == '') res.status(200).send({ status: "FAIL", message: "Age is required" })
     if (req.body.country == '') res.status(200).send({ status: "FAIL", message: "Country is required" })
     if (req.body.region == '') res.status(200).send({ status: "FAIL", message: "Region is required" })
+    otp = Math.floor(100000 + Math.random() * 900000);
     userCheck = "select * from tbl_users where email='" + req.body.email + "' and password='" + req.body.password + "'";
     userCheckResult = await sequelize.query(userCheck, { type: Sequelize.QueryTypes.SELECT });
-    if(userCheckResult.length>0) res.status(200).send({status:"FAIL",message:"This email is already taken.Please use different one!"})
-    else{
-        addUser="insert into tbl_users(firstName, lastName, email, phoneNumber, gender, age, password, imageUrl, country, region, zip, latitude, longitude, isVerified, role, allowNotification, isDeleted, isActive) values ('"+req.body.firstName+"','"+req.body.lastName+"','"+req.body.email+"','"+req.body.phoneNumber+"','"+req.body.gender+"','"+req.body.age+"','"+req.body.password+"','"+req.body.imageUrl+"','"+req.body.country+"','"+req.body.region+"','"+req.body.zip+"','"+req.body.latitude+"','"+req.body.longitude+"',"+"'0','BUYER','0','0','0')";
-        adduserres=await sequelize.query(addUser);
-        if(adduserres) {
-            res.status(200).send({status : "OK",message:"Thankyou for signup.We sent an email verification key to your email address.Please verify your account to get login!"})
-        }  else  res.status(200).send({status : "OK",message:"Error Signing up your account"})
+    if (userCheckResult.length > 0) res.status(200).send({ status: "FAIL", message: "This email is already taken.Please use different one!" })
+    else {
+        addUser = "insert into tbl_users(firstName, lastName, email, phoneNumber, gender, age, password, otp, imageUrl, country, region, zip, latitude, longitude, isVerified, role, allowNotification, isDeleted, isActive) values ('" + req.body.firstName + "','" + req.body.lastName + "','" + req.body.email + "','" + req.body.phoneNumber + "','" + req.body.gender + "','" + req.body.age + "','" + req.body.password + "','"+ otp + "','" + req.body.imageUrl + "','" + req.body.country + "','" + req.body.region + "','" + req.body.zip + "','" + req.body.latitude + "','" + req.body.longitude + "'," + "'0','BUYER','0','0','0')";
+        adduserres = await sequelize.query(addUser);
+        if (adduserres) {
+            let transporter = nodemailer.createTransport({
+                host: 'smtp.gmail.com',
+                port: 587,
+                secure: false,
+                requireTLS: true,
+                auth: {
+                    user: 'abdullahhashamfuuastian@gmail.com',
+                    pass: 'Abdullahhasham@12'
+                }
+            });
+
+            let mailOptions = {
+                from: 'abdullahhashamfuuastian@gmail.com',
+                to: req.body.email,
+                subject: 'Sign Up to Ecommerce',
+                text: '<p>/'
+            };
+
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    return console.log(error.message);
+                }
+                console.log('success');
+            });
+            res.status(200).send({ status: "OK", message: "Thankyou for signup.We sent an email verification key to your email address.Please verify your account to get login!" })
+        } else res.status(200).send({ status: "OK", message: "Error Signing up your account" })
     }
 }
 exports.buyerlogin = async (req, res) => {
@@ -34,8 +60,8 @@ exports.buyerlogin = async (req, res) => {
         if (verCheckRes.length > 0) {
             statusCheck = verCheck + " and isActive=1";
             statusChekRes = await sequelize.query(statusCheck, { type: Sequelize.QueryTypes.SELECT })
-            if(statusChekRes.length>0) res.status(200).send({ status: "OK", message: "Login successfully!", data: statusChekRes });
-            else res.status(200).send({status:"FAIL",message:"Your account is suspended by site admin. Please contact site administrator and try again!"})   
+            if (statusChekRes.length > 0) res.status(200).send({ status: "OK", message: "Login successfully!", data: statusChekRes });
+            else res.status(200).send({ status: "FAIL", message: "Your account is suspended by site admin. Please contact site administrator and try again!" })
         } else res.status(200).send({ status: "FAIL", message: "Your account is not verified. Please verify you account and try again!" })
     } else res.status(200).send({ status: "FAIL", message: "Invalid login credentials!" });
 }
