@@ -1,6 +1,7 @@
 var Sequelize = require('sequelize');
 var sequelize = require('../sequelizeConfig').sequelizeConfig;
 var nodemailer = require('nodemailer');
+var fs = require('fs');
 exports.buyersignup = async (req, res) => {
     if (req.body.email == '') res.status(200).send({ status: "FAIL", message: "Email is required" })
     if (req.body.password == '') res.status(200).send({ status: "FAIL", message: "Password is required" })
@@ -17,7 +18,7 @@ exports.buyersignup = async (req, res) => {
     userCheckResult = await sequelize.query(userCheck, { type: Sequelize.QueryTypes.SELECT });
     if (userCheckResult.length > 0) res.status(200).send({ status: "FAIL", message: "This email is already taken.Please use different one!" })
     else {
-        addUser = "insert into tbl_users(firstName, lastName, email, phoneNumber, gender, age, password, otp, imageUrl, country, region, zip, latitude, longitude, isVerified, role, allowNotification, isDeleted, isActive) values ('" + req.body.firstName + "','" + req.body.lastName + "','" + req.body.email + "','" + req.body.phoneNumber + "','" + req.body.gender + "','" + req.body.age + "','" + req.body.password + "','"+ otp + "','" + req.body.imageUrl + "','" + req.body.country + "','" + req.body.region + "','" + req.body.zip + "','" + req.body.latitude + "','" + req.body.longitude + "'," + "'0','BUYER','0','0','0')";
+        addUser = "insert into tbl_users(firstName, lastName, email, phoneNumber, gender, age, password, otp, imageUrl, country, region, zip, latitude, longitude, isVerified, role, allowNotification, isDeleted, isActive) values ('" + req.body.firstName + "','" + req.body.lastName + "','" + req.body.email + "','" + req.body.phoneNumber + "','" + req.body.gender + "','" + req.body.age + "','" + req.body.password + "','" + otp + "','" + req.body.imageUrl + "','" + req.body.country + "','" + req.body.region + "','" + req.body.zip + "','" + req.body.latitude + "','" + req.body.longitude + "'," + "'0','BUYER','0','0','0')";
         adduserres = await sequelize.query(addUser);
         if (adduserres) {
             let transporter = nodemailer.createTransport({
@@ -25,19 +26,21 @@ exports.buyersignup = async (req, res) => {
                 port: 587,
                 secure: false,
                 requireTLS: true,
-                auth: {
-                    user: 'abdullahhashamfuuastian@gmail.com',
-                    pass: 'Abdullahhasham@12'
-                }
+                auth: {user: 'abdullahhashamfuuastian@gmail.com',pass: 'Abdullahhasham@12'}
             });
-
+            require.extensions['.html'] = function (module, filename) {
+                module.exports = fs.readFileSync(filename, 'utf8');
+            };
+            var htmldata = require('../Template/Signup.html');
+            htmldata = htmldata.replace(new RegExp("CURRENT_YEAR", "g"), new Date().getFullYear());
+            htmldata = htmldata.replace(new RegExp("USER", "g"), req.body.firstName+" "+ req.body.lastName);
+            htmldata = htmldata.replace(new RegExp("OTP", "g"), otp);
             let mailOptions = {
                 from: 'abdullahhashamfuuastian@gmail.com',
                 to: req.body.email,
                 subject: 'Sign Up to Ecommerce',
-                text: '<p>/'
+                html:htmldata,
             };
-
             transporter.sendMail(mailOptions, (error, info) => {
                 if (error) {
                     return console.log(error.message);
@@ -47,6 +50,19 @@ exports.buyersignup = async (req, res) => {
             res.status(200).send({ status: "OK", message: "Thankyou for signup.We sent an email verification key to your email address.Please verify your account to get login!" })
         } else res.status(200).send({ status: "OK", message: "Error Signing up your account" })
     }
+}
+exports.verifyotp=async (req,res)=>{
+    if (req.body.otp == '') res.status(200).send({ status: "FAIL", message: "Otp is required" });
+    if (req.body.email == '') res.status(200).send({ status: "FAIL", message: "Email is required" });
+    otpcheck="select * from tbl_users where email='" + req.body.email + "' and otp='" + req.body.otp+"'";
+    otpcheckres = await sequelize.query(otpcheck,{ type: Sequelize.QueryTypes.SELECT });
+    if(otpcheckres.length>0){
+        verifyuser="update tbl_users set isVerified=1 where email='"+req.body.email+"'";
+        verifyuserres=await sequelize.query(verifyuser);
+        if(verifyuserres) res.status(200).send({status : "OK",message:"OTP verifed successfully you can login to ecommerce"})
+        else res.status(200).send({status : "OK",message:"Unable to verify your email!.Please try later"})
+    } 
+    else res.status(200).send({status : "Ok",message : "Invalid OTP"})
 }
 exports.buyerlogin = async (req, res) => {
     if (req.body.email == '') res.status(200).send({ status: "FAIL", message: "Email is required" })

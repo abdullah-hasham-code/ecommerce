@@ -11,6 +11,10 @@ var router = () => {
         usercontroller.buyersignup(req, res);
 
     })
+    usrroute.route('/verifyotp').post(function (req, res) {
+        usercontroller.verifyotp(req, res);
+
+    })
     return usrroute;
 }
 module.exports = router;
