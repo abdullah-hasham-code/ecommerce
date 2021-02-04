@@ -11,6 +11,7 @@ var router = () => {
     })
     shoproute.route('/createcategory').post(authController.authToken,function(req,res){
         shopController.createcategory(req,res);
+        asdadasd
     })
     return shoproute;
 }
