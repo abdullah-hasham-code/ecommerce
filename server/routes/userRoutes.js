@@ -1,32 +1,23 @@
 var express = require('express');
-var usrroute = express.Router();
+var userroute = express.Router();
 
-var usercontroller = require('../controller/usersController');
+var userController = require('../controller/usersController');
 var router = () => {
-    usrroute.route('/sellersignup').post(function (req, res) {
-        usercontroller.sellersignup(req, res);
-
+    userroute.route('/sellersignup').post(function (req, res) {
+        userController.sellersignup(req, res);
     })
-    usrroute.route('/sellerlogin').post(function (req, res) {
-        usercontroller.sellerlogin(req, res);
-
+    userroute.route('/sellerlogin').post(function (req, res) {
+        userController.sellerlogin(req, res);
     })
-    usrroute.route('/buyersignup').post(function (req, res) {
-        usercontroller.buyersignup(req, res);
-
+    userroute.route('/buyersignup').post(function (req, res) {
+        userController.buyersignup(req, res);
     })
-    usrroute.route('/buyerlogin').post(function (req, res) {
-        usercontroller.buyerlogin(req, res);
-
+    userroute.route('/buyerlogin').post(function (req, res) {
+        userController.buyerlogin(req, res);
     })
-    usrroute.route('/verifyotp').post(function (req, res) {
-        usercontroller.verifyotp(req, res);
-
+    userroute.route('/verifyotp').post(function (req, res) {
+        userController.verifyotp(req, res);
     })
-    usrroute.route('/checktoken').post(function (req, res) {
-        usercontroller.checktoken(req, res);
-
-    })
-    return usrroute;
+    return userroute;
 }
 module.exports = router;

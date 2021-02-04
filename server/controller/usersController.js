@@ -1,6 +1,5 @@
 var Sequelize = require('sequelize');
 var sequelize = require('../sequelizeConfig').sequelizeConfig;
-const authController = require('./authController');
 var nodemailer = require('nodemailer');
 var fs = require('fs');
 var jwt = require('jsonwebtoken');
@@ -68,8 +67,9 @@ exports.sellerlogin = async (req, res) => {
             statusChekRes = await sequelize.query(statusCheck, { type: Sequelize.QueryTypes.SELECT })
             if (statusChekRes.length > 0) {
                 var token = jwt.sign({ id: statusChekRes[0].id }, "secret", { expiresIn: 86400 });
+                var decode=jwt.decode(token);
                 if (token) {
-                    checkTokenExist = "select * from tbl_users,tbl_sessions where tbl_users.id=tbl_sessions.userId and tbl_users.role='SELLER'";
+                    checkTokenExist = "select * from tbl_users,tbl_sessions where tbl_users.id="+statusChekRes[0].id+" and tbl_users.role='SELLER' and tbl_users.id=tbl_sessions.userId";
                     checkTokenexistRes = await sequelize.query(checkTokenExist, { type: Sequelize.QueryTypes.SELECT });
                     if (checkTokenexistRes.length > 0) {
                         updSession = "update tbl_sessions set session='" + token + "' where userId='" + statusChekRes[0].id + "'";
@@ -149,7 +149,7 @@ exports.buyerlogin = async (req, res) => {
             if (statusChekRes.length > 0) {
                 var token = jwt.sign({ id: statusChekRes[0].id }, "secret", { expiresIn: 86400 });
                 if (token) {
-                    checkTokenExist = "select * from tbl_users,tbl_sessions where tbl_users."+statusChekRes[0].id+"=tbl_sessions.userId and tbl_users.role='BUYER'";
+                    checkTokenExist = "select * from tbl_users,tbl_sessions where tbl_users.id="+statusChekRes[0].id+" and tbl_users.role='BUYER' and tbl_users.id=tbl_sessions.userId";
                     checkTokenexistRes = await sequelize.query(checkTokenExist, { type: Sequelize.QueryTypes.SELECT });
                     if (checkTokenexistRes.length > 0) {
                         updSession = "update tbl_sessions set session='" + token + "' where userId='" + statusChekRes[0].id + "'";
@@ -166,7 +166,6 @@ exports.buyerlogin = async (req, res) => {
         } else res.status(200).send({ status: "FAIL", message: "Your account is not verified. Please verify you account and try again!" })
     } else res.status(200).send({ status: "FAIL", message: "Invalid login credentials!" });
 }
-
 exports.verifyotp = async (req, res) => {
     if (req.body.otp == '') res.status(200).send({ status: "FAIL", message: "Otp is required" });
     if (req.body.email == '') res.status(200).send({ status: "FAIL", message: "Email is required" });
@@ -179,10 +178,4 @@ exports.verifyotp = async (req, res) => {
         else res.status(200).send({ status: "OK", message: "Unable to verify your email!.Please try later" })
     }
     else res.status(200).send({ status: "Ok", message: "Invalid OTP" })
-}
-exports.checktoken = async (req, res) => {
-    checkToken = authController.authToken(req, res);
-    if(checkToken){
-        console.log("Asad")
-    }
 }
