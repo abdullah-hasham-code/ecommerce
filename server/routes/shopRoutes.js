@@ -9,6 +9,9 @@ var router = () => {
     shoproute.route('/createproduct').post(authController.authToken,function(req,res){
         shopController.createproduct(req,res);
     })
+    shoproute.route('/createcategory').post(authController.authToken,function(req,res){
+        shopController.createcategory(req,res);
+    })
     return shoproute;
 }
 module.exports = router;
