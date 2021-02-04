@@ -23,18 +23,24 @@ exports.createproduct = async (req, res) => {
     if (req.body.marketPrice == '' || req.body.marketPrice == undefined || req.body.marketPrice == null) res.status(200).send({ status: "OK", message: "Please fill Market Price" });
     if (req.body.ourPrice == '' || req.body.ourPrice == undefined || req.body.ourPrice == null) res.status(200).send({ status: "OK", message: "Please fill Our Price" });
     var decode = jwt.decode(req.headers.token, "secret");
-    checkShopExist = "select * from tbl_shops where userId ="+ decode.id;
-    console.log(checkShopExist)
+    checkShopExist = "select * from tbl_shops where userId =" + decode.id;
     checkShopExistRes = await sequelize.query(checkShopExist, { type: Sequelize.QueryTypes.SELECT });
-    console.log(checkShopExistRes)
     checkProd = "select * from tbl_products where productName='" + req.body.productName + "'";
     checkProdRes = await sequelize.query(checkProd, { type: sequelize.QueryTypes.SELECT });
     if (checkProdRes.length > 0) res.status(403).send({ status: "OK", message: "The product already exist with the same name. Please use different one!" });
     else {
         createProd = "insert into tbl_products (shopId,userId,productName,productDescription,marketPrice,ourPrice) values('" + checkShopExistRes[0].shopId + "','" + decode.id + "','" + req.body.productName + "','" + req.body.productDescription + "','" + req.body.marketPrice + "','" + req.body.ourPrice + "')";
-        createProdRes = await  sequelize.query(createProd);
+        createProdRes = await sequelize.query(createProd);
         if (createProdRes) res.status(403).send({ status: "OK", message: "Product has been created successfully!" });
         else res.status(403).send({ status: "OK", message: "Error creating the product" })
-
+    }
+}
+exports.createcategory = async (req, res) => {
+    if (req.body.categoryName == '' || req.body.categoryName == undefined || req.body.categoryName == null) res.status(200).send({ status: "OK", message: "Please fill Category Name" });
+    checkCategory = "seklect * from tbl_category where categoryName= '" + req.body.categoryName + "'";
+    checkCategoryRes = sequelize.query(checkCategory, { type: sequelize.QueryTypes.SELECT });
+    if(checkCategoryRes.length>0) res.status(403).send({status:"OK",message:"This category type already exist. Please use different category!"})
+    else{
+        insertCategory="insert into tbl_category() values"
     }
 }
