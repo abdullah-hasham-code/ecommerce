@@ -35,6 +35,10 @@ exports.createproduct = async (req, res) => {
         else res.status(403).send({ status: "OK", message: "Error creating the product" })
     }
 }
+exports.getproductbycategoryName = async (req, res) => {
+    if (req.body.categoryName == '' || req.body.categoryName == undefined || req.body.categoryName == null) res.status(200).send({ status: "OK", message: "Please fill Category Name" });
+    checkCategory="select * from tbl_products,tbl_category where categoryName='"+req.body.categoryName+"'";
+}
 exports.createcategory = async (req, res) => {
     if (req.body.categoryName == '' || req.body.categoryName == undefined || req.body.categoryName == null) res.status(200).send({ status: "OK", message: "Please fill Category Name" });
     checkCategory = "seklect * from tbl_category where categoryName= '" + req.body.categoryName + "'";
@@ -44,6 +48,6 @@ exports.createcategory = async (req, res) => {
         insertCategory = "insert into tbl_category(categoryName) values('" + req.body.categoryName + "')";
         insertCatetgoryRes = sequelize.query(insertCategory, { type: sequelize.QueryTypes.SELECT })
         if (insertCatetgoryRes) res.status(403).send({ status: "OK", message: "Category has been addedd successfully!" });
-        else res.status(403).send({status:"FAIL",message:"Error creating Category!"})
+        else res.status(403).send({ status: "FAIL", message: "Error creating Category!" })
     }
 }
