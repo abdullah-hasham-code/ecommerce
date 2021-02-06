@@ -7,14 +7,15 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 var port = process.env.PORT || 3030;
 var sequelize = require('./sequelizeConfig').sequelizeConfig;
-var usrRoute = require("./routes/userRoutes")();
+var userRoute = require("./routes/userRoutes")();
+var shopRoute = require('./routes/shopRoutes')();
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET , PUT , POST , DELETE");
     res.header("Access-Control-Allow-Headers", "Content-Type, x-requested-with");
     next(); // Important
 })
-app.use('/api',usrRoute);
+app.use('/api',userRoute,shopRoute);
 
 sequelize.authenticate().then(()=>{
    
