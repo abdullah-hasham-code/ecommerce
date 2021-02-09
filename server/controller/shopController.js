@@ -57,7 +57,7 @@ exports.createcategory = async (req, res) => {
         res.status(200).send({ status: "OK", message: "Please fill Category Name" });
         return;
     }
-    checkCategory = "seklect * from tbl_category where categoryName= '" + req.body.categoryName + "'";
+    checkCategory = "select * from tbl_category where categoryName= '" + req.body.categoryName + "'";
     checkCategoryRes = sequelize.query(checkCategory, { type: sequelize.QueryTypes.SELECT });
     if (checkCategoryRes.length > 0) res.status(403).send({ status: "OK", message: "This category type already exist. Please use different category!" })
     else {
