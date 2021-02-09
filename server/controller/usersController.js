@@ -41,7 +41,7 @@ exports.sellersignup = async (req, res) => {
             let mailOptions = {
                 from: 'abdullahhashamfuuastian@gmail.com',
                 to: req.body.email,
-                subject: 'Sign Up to Ecommerce',
+                subject: 'Sign up to Ecommerce',
                 html: htmldata,
             };
             transporter.sendMail(mailOptions, (error, info) => {
