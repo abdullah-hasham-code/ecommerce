@@ -37,14 +37,12 @@ exports.createproduct = async (req, res) => {
     }
 }
 exports.getproductbycategoryname = async (req, res) => {
-<<<<<<< HEAD
     if (req.body.categoryName == '' || req.body.categoryName == undefined || req.body.categoryName == null) res.status(200).send({ status: "OK", message: "Please fill Category Name" });
     checkCategory="select * from tbl_products,tbl_category where categoryName='"+req.body.categoryName+"'";
 }
 exports.createcategory = async (req, res) => {
     if (req.body.categoryName == '' || req.body.categoryName == undefined || req.body.categoryName == null) res.status(200).send({ status: "OK", message: "Please fill Category Name" });
     checkCategory = "select * from tbl_category where categoryName= '" + req.body.categoryName + "'";
-=======
     if (req.body.categoryName == '' || req.body.categoryName == undefined || req.body.categoryName == null) {
         res.status(200).send({ status: "OK", message: "Please fill Category Name" });
         return;
@@ -60,7 +58,6 @@ exports.createcategory = async (req, res) => {
         return;
     }
     checkCategory = "seklect * from tbl_category where categoryName= '" + req.body.categoryName + "'";
->>>>>>> 64e6be677a27425bde81af1bccc659b71547de7e
     checkCategoryRes = sequelize.query(checkCategory, { type: sequelize.QueryTypes.SELECT });
     if (checkCategoryRes.length > 0) res.status(403).send({ status: "OK", message: "This category type already exist. Please use different category!" })
     else {
