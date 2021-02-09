@@ -38,19 +38,15 @@ exports.createproduct = async (req, res) => {
 }
 exports.getproductbycategoryname = async (req, res) => {
     if (req.body.categoryName == '' || req.body.categoryName == undefined || req.body.categoryName == null) res.status(200).send({ status: "OK", message: "Please fill Category Name" });
-    checkCategory="select * from tbl_products,tbl_category where categoryName='"+req.body.categoryName+"'";
-}
-exports.createcategory = async (req, res) => {
-    if (req.body.categoryName == '' || req.body.categoryName == undefined || req.body.categoryName == null) res.status(200).send({ status: "OK", message: "Please fill Category Name" });
     checkCategory = "select * from tbl_category where categoryName= '" + req.body.categoryName + "'";
     if (req.body.categoryName == '' || req.body.categoryName == undefined || req.body.categoryName == null) {
         res.status(200).send({ status: "OK", message: "Please fill Category Name" });
         return;
     }
-    checkCategory = "select * from tbl_products,tbl_category WHERE tbl_category.categoryName=tbl_products.productCategory and tbl_category.categoryName='" + req.body.categoryName + "' ORDER BY productName asc limit "+req.body.limit+" offset "+req.body.offset+"";
+    checkCategory = "select * from tbl_products,tbl_category WHERE tbl_category.categoryName=tbl_products.productCategory and tbl_category.categoryName='" + req.body.categoryName + "' ORDER BY productName asc limit " + req.body.limit + " offset " + req.body.offset + "";
     checkCategoryRes = await sequelize.query(checkCategory, { type: sequelize.QueryTypes.SELECT });
     if (checkCategoryRes.length > 0) res.status(403).send({ status: "OK", message: "Category fetched successfully!", data: checkCategoryRes });
-    else res.status(403).send({ status: "FAIL", message: "No reocrds found!" });
+    else res.status(403).send({ status: "FAIL", message: "No records found!" });
 }
 exports.createcategory = async (req, res) => {
     if (req.body.categoryName == '' || req.body.categoryName == undefined || req.body.categoryName == null) {
@@ -66,4 +62,11 @@ exports.createcategory = async (req, res) => {
         if (insertCatetgoryRes) res.status(403).send({ status: "OK", message: "Category has been addedd successfully!" });
         else res.status(403).send({ status: "FAIL", message: "Error creating Category!" })
     }
+}
+exports.getallcategories = async (req, res) => {
+    if (req.body.categoryId == '' || req.body.categoryId == undefined || req.body.categoryId == null) res.status(200).send({ status: "OK", message: "Please fill Category Id" });    
+    checkCategory = "select * from tbl_category where categoryId=" + req.body.categoryId;
+    checkCategoryRes = await sequelize.query(checkCategory, { type: sequelize.QueryTypes.SELECT });    
+    if (checkCategoryRes.length > 0) res.status(403).send({ status: "OK", message: "Category fetched successfully!", data: checkCategoryRes });
+    else res.status(403).send({ status: "FAIL", message: "No records found!" });  
 }
