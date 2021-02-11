@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ApiService} from './../../api.service';
 
 @Component({
   selector: 'app-buyersignup',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BuyersignupComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(private api:ApiService) { }
+	signupData:any={};
   ngOnInit(): void {
   }
-
+	buyersignup(){
+		this.api.buyersignup(this.signupData).subscribe(res=>{
+      
+		},(err=>{
+      console.log(err);
+    }))
+	}
 }

@@ -6,5 +6,8 @@ import { AppService } from './app.service';
 })
 export class ApiService {
 
-  constructor(private app:AppService) { }
+  constructor(private app: AppService) { }
+  buyersignup(object: any) {
+    return this.app.post('buyersignup', object);
+  }
 }
