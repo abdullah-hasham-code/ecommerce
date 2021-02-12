@@ -12,12 +12,12 @@ export class AppService {
 
   constructor(private http: Http) { }
   urlBase = "http://localhost:3030/api/";
-  auth = '';
+  auth:any = '';
   setAuthToken() {
-    // this.auth = (this.localStorage.getItem('token')) ? this.localStorage.getItem('token') : '';
+    this.auth = (localStorage.getItem('token')) ? localStorage.getItem('token') : '';
   }
   post(url:any, data:any) {
-    // this.setAuthToken();
+    this.setAuthToken();
     var headers = new Headers({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'token': this.auth });
     var options = new RequestOptions({ headers: headers });
     return this.http.post(this.urlBase + url, data, options).pipe(map((res: any) => {
@@ -25,7 +25,7 @@ export class AppService {
     }));
   }
   get(url:any) {
-    // this.setAuthToken();
+    this.setAuthToken();
     var headers = new Headers({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'token': this.auth });
     var options = new RequestOptions({ headers: headers });
     return this.http.get(this.urlBase + url, options).pipe(map((res: any) => {

@@ -10,4 +10,7 @@ export class ApiService {
   buyersignup(object: any) {
     return this.app.post('buyersignup', object);
   }
+  buyerlogin(object:any){
+    return this.app.post('buyerlogin',object);
+  }
 }

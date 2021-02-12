@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ToastService} from 'ng-uikit-pro-standard'
 
 @Component({
   selector: 'app-buyer',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BuyerComponent implements OnInit {
 
-  constructor() { }
+  constructor(private toast: ToastService) { }
 
   ngOnInit(): void {
   }
