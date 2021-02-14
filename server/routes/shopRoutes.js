@@ -6,6 +6,12 @@ var router = () => {
     shoproute.route('/createshop').post(authController.authToken, function (req, res) {
         shopController.createshop(req, res);
     })
+    shoproute.route('/checkshopexist').post(authController.authToken, function (req, res) {
+        shopController.checkshopexist(req, res);
+    })
+    shoproute.route('/getallcategories').post(authController.authToken, function (req, res) {
+        shopController.getallcategories(req, res);
+    })
     shoproute.route('/createproduct').post(authController.authToken, function (req, res) {
         shopController.createproduct(req, res);
     })

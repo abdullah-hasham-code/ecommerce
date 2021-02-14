@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ApiService} from './../../api.service';
+import {BuyerService} from './../../buyer.service';
 import {ToastService} from 'ng-uikit-pro-standard';
 
 @Component({
@@ -9,7 +9,7 @@ import {ToastService} from 'ng-uikit-pro-standard';
 })
 export class BuyerloginComponent implements OnInit {
 
-	constructor(private api:ApiService,private toast : ToastService) { }
+	constructor(private api:BuyerService,private toast : ToastService) { }
 	loginData:any={};
 	ngOnInit(): void {
 	}

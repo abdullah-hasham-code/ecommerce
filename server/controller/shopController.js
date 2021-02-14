@@ -6,16 +6,26 @@ exports.createshop = async (req, res) => {
     var decode = jwt.decode(req.headers.token, "secret");
     if (req.body.shopName == '') res.status(200).send({ status: "OK", message: "Please fill the Shop Name" })
     if (req.body.shopDescription == '') res.status(200).send({ status: "OK", message: "Please fill the Shop Description" })
+    if (req.body.shopCategory == '') res.status(200).send({ status: "OK", message: "Please fill the Shop Category" })
+    if (req.body.shopCity == '') res.status(200).send({ status: "OK", message: "Please fill the Shop City" })
     if (req.body.shopFor == '') res.status(200).send({ status: "OK", message: "Please fill the Shop For" })
+    if (req.body.shopUrl == '') res.status(200).send({ status: "OK", message: "Please fill the Shop Url" })
     if (req.body.shopLogo == '') res.status(200).send({ status: "OK", message: "Please fill the Shop Logo" })
     checkShopExist = "select * from tbl_shops where shopName='" + req.body.shopName + "'";
     checkShopExistRes = await sequelize.query(checkShopExist, { type: Sequelize.QueryTypes.SELECT });
     if (checkShopExistRes.length > 0) res.status(403).send({ status: "OK", message: "There is another shop exist " })
     else {
-        createShop = "insert into tbl_shops (userId,shopName,shopDescription,shopFor,shopLogo) values('" + decode.id + "','" + req.body.shopName + "','" + req.body.shopDescription + "','" + req.body.shopFor + "','" + req.body.shopLogo + "')";
+        createShop = "insert into tbl_shops (userId,shopName,shopDescription,shopCategory,shopCity,shopFor,shopUrl,shopLogo) values('" + decode.id + "','" + req.body.shopName + "','" + req.body.shopDescription + "','" + req.body.shopCategory + "','" + req.body.shopCity + "','" + req.body.shopFor + "','" + req.body.shopUrl + "','" + req.body.shopLogo + "')";
         createShopRes = sequelize.query(createShop);
         if (createShopRes) res.status(403).send({ status: "OK", message: "Your shop has been created successfully!" })
     }
+}
+exports.checkshopexist = async (req, res) => {
+    var decode = jwt.decode(req.headers.token, "secret");
+    checkShopExist = "select * from tbl_shops where userId='" + decode.id + "'";
+    checkShopExistRes = await sequelize.query(checkShopExist, { type: Sequelize.QueryTypes.SELECT });
+    if (checkShopExistRes.length > 0) res.status(200).send({ status: "OK", message: "shop found!" });
+    else res.send({ status: "FAIL", message: "No shop found!" });
 }
 exports.createproduct = async (req, res) => {
     if (req.body.productName == '' || req.body.productName == undefined || req.body.productName == null) res.status(200).send({ status: "OK", message: "Please fill Product Name" });
@@ -64,9 +74,9 @@ exports.createcategory = async (req, res) => {
     }
 }
 exports.getallcategories = async (req, res) => {
-    if (req.body.categoryId == '' || req.body.categoryId == undefined || req.body.categoryId == null) res.status(200).send({ status: "OK", message: "Please fill Category Id" });    
+    if (req.body.categoryId == '' || req.body.categoryId == undefined || req.body.categoryId == null) res.status(200).send({ status: "OK", message: "Please fill Category Id" });
     checkCategory = "select * from tbl_category where categoryId=" + req.body.categoryId;
-    checkCategoryRes = await sequelize.query(checkCategory, { type: sequelize.QueryTypes.SELECT });    
+    checkCategoryRes = await sequelize.query(checkCategory, { type: sequelize.QueryTypes.SELECT });
     if (checkCategoryRes.length > 0) res.status(403).send({ status: "OK", message: "Category fetched successfully!", data: checkCategoryRes });
-    else res.status(403).send({ status: "FAIL", message: "No records found!" });  
+    else res.status(403).send({ status: "FAIL", message: "No records found!" });
 }

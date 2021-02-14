@@ -1,0 +1,47 @@
+<div class="login">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="text-center">EStore</h1>
+            </div>
+            <div class="col-lg-12">
+                <div class="login-form">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Shop Name</label>
+                            <input class="form-control" type="text" placeholder="Shop Name" [(ngModel)]="shopData.email">
+                        </div>
+                        <div class="col-md-6">
+                            <label>Shop Description</label>
+                            <input class="form-control" type="text" placeholder="Shop Description" [(ngModel)]="shopData.password">
+                        </div>
+                        <div class="col-md-6">
+                            <label>Shop Category</label>
+                            <input class="form-control" type="text" placeholder="Shop Category" [(ngModel)]="shopData.email">
+                        </div>
+                        <div class="col-md-6">
+                            <label>Shop City</label>
+                            <input class="form-control" type="text" placeholder="Shop City" [(ngModel)]="shopData.password">
+                        </div>
+                        <div class="col-md-6">
+                            <label>Shop For</label>
+                            <input class="form-control" type="text" placeholder="Shop For" [(ngModel)]="shopData.email">
+                        </div>
+                        <div class="col-md-6">
+                            <label>Shop Url</label>
+                            <input class="form-control" type="text" placeholder="Shop Url" [(ngModel)]="shopData.password">
+                        </div>
+                        <div class="col-md-6 mb-auto">
+                            <label>Shop Logo</label>
+                            <input class="form-control" type='file' (change)="readURL($event);" />
+                            <img id="blah" [src]="imageSrc || './../../assets/imageplaceholder/logo.jpg'" class="shopImage h-50 w-50 rounded-circle" alt="your image" />
+                        </div>
+                        <div class="col-md-12">
+                            <button class="btn" (click)="createShop()">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

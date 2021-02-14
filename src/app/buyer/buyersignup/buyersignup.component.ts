@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ApiService} from './../../api.service';
+import {BuyerService} from './../../buyer.service';
 
 @Component({
   selector: 'app-buyersignup',
@@ -8,7 +8,7 @@ import {ApiService} from './../../api.service';
 })
 export class BuyersignupComponent implements OnInit {
 
-  constructor(private api:ApiService) { }
+  constructor(private api:BuyerService) { }
 	signupData:any={};
   ngOnInit(): void {
   }
