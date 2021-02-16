@@ -2,20 +2,24 @@ var Sequelize = require('sequelize');
 var sequelize = require('../sequelizeConfig').sequelizeConfig;
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
+var multer  = require('multer');
 exports.createshop = async (req, res) => {
     var decode = jwt.decode(req.headers.token, "secret");
-    if (req.body.shopName == '') res.status(200).send({ status: "OK", message: "Please fill the Shop Name" })
-    if (req.body.shopDescription == '') res.status(200).send({ status: "OK", message: "Please fill the Shop Description" })
-    if (req.body.shopCategory == '') res.status(200).send({ status: "OK", message: "Please fill the Shop Category" })
-    if (req.body.shopCity == '') res.status(200).send({ status: "OK", message: "Please fill the Shop City" })
-    if (req.body.shopFor == '') res.status(200).send({ status: "OK", message: "Please fill the Shop For" })
-    if (req.body.shopUrl == '') res.status(200).send({ status: "OK", message: "Please fill the Shop Url" })
-    if (req.body.shopLogo == '') res.status(200).send({ status: "OK", message: "Please fill the Shop Logo" })
+    if (req.body.shopName == '') res.status(200).send({ status: "OK", message: "Please fill the Shop Name" });
+    if (req.body.shopDescription == '') res.status(200).send({ status: "OK", message: "Please fill the Shop Description" });
+    if (req.body.shopCategory == '') res.status(200).send({ status: "OK", message: "Please fill the Shop Category" });
+    if (req.body.shopCity == '') res.status(200).send({ status: "OK", message: "Please fill the Shop City" });
+    if (req.body.shopFor == '') res.status(200).send({ status: "OK", message: "Please fill the Shop For" });
+    if (req.body.shopUrl == '') res.status(200).send({ status: "OK", message: "Please fill the Shop Url" });
+    if (req.body.shopLogo == '') res.status(200).send({ status: "OK", message: "Please fill the Shop Logo" });
+    shopLogo="../../src/assets/shopimages/"+req.body.shopLogo;
+    var image = new Buffer.from(shopLogo, 'base64').toString('binary');
     checkShopExist = "select * from tbl_shops where shopName='" + req.body.shopName + "'";
     checkShopExistRes = await sequelize.query(checkShopExist, { type: Sequelize.QueryTypes.SELECT });
     if (checkShopExistRes.length > 0) res.status(403).send({ status: "OK", message: "There is another shop exist " })
     else {
-        createShop = "insert into tbl_shops (userId,shopName,shopDescription,shopCategory,shopCity,shopFor,shopUrl,shopLogo) values('" + decode.id + "','" + req.body.shopName + "','" + req.body.shopDescription + "','" + req.body.shopCategory + "','" + req.body.shopCity + "','" + req.body.shopFor + "','" + req.body.shopUrl + "','" + req.body.shopLogo + "')";
+        console.log(image)
+        createShop = "insert into tbl_shops (userId,shopName,shopDescription,shopCategory,shopCity,shopFor,shopUrl,shopLogo) values('" + decode.id + "','" + req.body.shopName + "','" + req.body.shopDescription + "','" + req.body.shopCategory + "','" + req.body.shopCity + "','" + req.body.shopFor + "','" + req.body.shopUrl + "','" + image + "')";
         createShopRes = sequelize.query(createShop);
         if (createShopRes) res.status(403).send({ status: "OK", message: "Your shop has been created successfully!" })
     }
