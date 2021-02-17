@@ -16,6 +16,7 @@ app.use((req, res, next) => {
     next(); // Important
 })
 app.use('/api',userRoute,shopRoute);
+app.use('/assets', express.static('assets'));
 
 sequelize.authenticate().then(()=>{
    
