@@ -4,6 +4,27 @@ var shopController = require('../controller/shopController');
 var authController = require('../controller/authController');
 var multer = require('multer');
 var upload=multer({dest:'../../src/assets/shopimages/'});
+var multer  = require('multer');
+var storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, 'assets/');
+    },
+    filename: (req, file, cb) => {
+      console.log(file);
+      var filetype = '';
+      if(file.mimetype === 'image/gif') {
+        filetype = 'gif';
+      }
+      if(file.mimetype === 'image/png') {
+        filetype = 'png';
+      }
+      if(file.mimetype === 'image/jpeg') {
+        filetype = 'jpg';
+      }
+      cb(null, 'image-' + Date.now() + '.' + filetype);
+    }
+});
+var upload = multer({storage: storage});
 var router = () => {
     shoproute.route('/createshop',upload.single('shopLogo')).post(authController.authToken, function (req, res) {
         console.log(req.file)
@@ -26,6 +47,13 @@ var router = () => {
     })
     shoproute.route('/getallcategories').post(authController.authToken, function (req, res) {
         shopController.getallcategories(req, res);
+    })
+    shoproute.route('/upload').post(authController.authToken,upload.single('file'), function (req, res) {
+        console.log(req.file);
+        if(!req.file) {
+            res.status(500);
+        }
+        res.json({ fileUrl: 'assets/' + req.file.filename });
     })
     return shoproute;
 }
