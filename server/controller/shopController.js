@@ -2,7 +2,8 @@ var Sequelize = require('sequelize');
 var sequelize = require('../sequelizeConfig').sequelizeConfig;
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
-var multer  = require('multer');
+var multer  = require('multer')
+var upload = multer({ dest: '../../src/assets/shopimages' })
 exports.createshop = async (req, res) => {
     var decode = jwt.decode(req.headers.token, "secret");
     if (req.body.shopName == '') res.status(200).send({ status: "OK", message: "Please fill the Shop Name" });
@@ -18,7 +19,6 @@ exports.createshop = async (req, res) => {
     checkShopExistRes = await sequelize.query(checkShopExist, { type: Sequelize.QueryTypes.SELECT });
     if (checkShopExistRes.length > 0) res.status(403).send({ status: "OK", message: "There is another shop exist " })
     else {
-        console.log(image)
         createShop = "insert into tbl_shops (userId,shopName,shopDescription,shopCategory,shopCity,shopFor,shopUrl,shopLogo) values('" + decode.id + "','" + req.body.shopName + "','" + req.body.shopDescription + "','" + req.body.shopCategory + "','" + req.body.shopCity + "','" + req.body.shopFor + "','" + req.body.shopUrl + "','" + image + "')";
         createShopRes = sequelize.query(createShop);
         if (createShopRes) res.status(403).send({ status: "OK", message: "Your shop has been created successfully!" })

@@ -2,8 +2,11 @@ var express = require('express');
 var shoproute = express.Router();
 var shopController = require('../controller/shopController');
 var authController = require('../controller/authController');
+var multer = require('multer');
+var upload=multer({dest:'../../src/assets/shopimages/'});
 var router = () => {
-    shoproute.route('/createshop').post(authController.authToken, function (req, res) {
+    shoproute.route('/createshop',upload.single('shopLogo')).post(authController.authToken, function (req, res) {
+        console.log(req.file)
         shopController.createshop(req, res);
     })
     shoproute.route('/checkshopexist').post(authController.authToken, function (req, res) {
