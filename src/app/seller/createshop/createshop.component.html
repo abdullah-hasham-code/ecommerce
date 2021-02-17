@@ -9,32 +9,32 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label>Shop Name</label>
-                            <input class="form-control" type="text" placeholder="Shop Name" [(ngModel)]="shopData.email">
+                            <input class="form-control" type="text" placeholder="Shop Name" [(ngModel)]="shopData.shopName">
                         </div>
                         <div class="col-md-6">
                             <label>Shop Description</label>
-                            <input class="form-control" type="text" placeholder="Shop Description" [(ngModel)]="shopData.password">
+                            <input class="form-control" type="text" placeholder="Shop Description" [(ngModel)]="shopData.shopDescription">
                         </div>
                         <div class="col-md-6">
                             <label>Shop Category</label>
-                            <input class="form-control" type="text" placeholder="Shop Category" [(ngModel)]="shopData.email">
+                            <input class="form-control" type="text" placeholder="Shop Category" [(ngModel)]="shopData.shopCategory">
                         </div>
                         <div class="col-md-6">
                             <label>Shop City</label>
-                            <input class="form-control" type="text" placeholder="Shop City" [(ngModel)]="shopData.password">
+                            <input class="form-control" type="text" placeholder="Shop City" [(ngModel)]="shopData.shopCity">
                         </div>
                         <div class="col-md-6">
                             <label>Shop For</label>
-                            <input class="form-control" type="text" placeholder="Shop For" [(ngModel)]="shopData.email">
+                            <input class="form-control" type="text" placeholder="Shop For" [(ngModel)]="shopData.shopFor">
                         </div>
                         <div class="col-md-6">
                             <label>Shop Url</label>
-                            <input class="form-control" type="text" placeholder="Shop Url" [(ngModel)]="shopData.password">
+                            <input class="form-control" type="text" placeholder="Shop Url" [(ngModel)]="shopData.shopUrl">
                         </div>
                         <div class="col-md-6 mb-auto">
                             <label>Shop Logo</label>
-                            <input class="form-control" type='file' (change)="readURL($event);" />
-                            <img id="blah" [src]="imageSrc || './../../assets/imageplaceholder/logo.jpg'" class="shopImage h-50 w-50 rounded-circle" alt="your image" />
+                            <input class="form-control" type='file' (change)="readURL($event);">
+                            <img id="blah" [src]="imageSrc || './../../assets/imageplaceholder/logo.jpg'" class="shopImage h-50 w-50 rounded-circle" alt="your image" [(ngModel)]="shopData.filename"/>
                         </div>
                         <div class="col-md-12">
                             <button class="btn" (click)="createShop()">Submit</button>

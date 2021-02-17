@@ -20,4 +20,7 @@ export class SellerService {
   checkshopexist(object:any){
     return this.app.post('checkshopexist',object);
   }
+  upload(object:any){
+    return this.app.post('upload',object);
+  }
 }
