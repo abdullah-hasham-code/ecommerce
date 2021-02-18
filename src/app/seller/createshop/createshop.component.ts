@@ -25,12 +25,26 @@ export class CreateshopComponent implements OnInit {
 	ngOnInit(): void {
 	}
 	readURL(event: any) {
-		if (event.target.files && event.target.files[0]) {
-			const file = event.target.files[0];
-			const reader = new FileReader();
-			reader.onload = e => this.imageSrc = reader.result;
-			reader.readAsDataURL(file);
-			console.log(this.imageSrc)
+		let formData = new FormData();
+		var files: any = event.target.files;
+		var filePath:any;
+		if (files.length > 0) {
+			var allowedTypes = ['png', 'jpeg','jpg','JPG','JPEG','PNG'];
+			var filePathLengthBeforeImages = filePath.length;
+			for (let i = 0; i < files.length; i++) {
+			  if (allowedTypes.indexOf(files[i].name.split('.').pop()) == -1) { 
+				(<HTMLInputElement>document.getElementById('chooseimg')).value = ''; 
+				this.toast.error('error', 'Sorry, Only png and jpeg files are allowed!(IN)'); return false; }
+			}
+		// if (event.target.files && event.target.files[0]) {
+		// 	const file = event.target.files[0];
+		// 	const reader = new FileReader();
+		// 	reader.onload = e => this.imageSrc = reader.result;
+		// 	reader.readAsDataURL(file);
+		// 	this.api.uploadfile(this.imageSrc).subscribe(res=>{
+		// 		console.log(res)
+		// 	})
+		// }
 		}
 	}
 	createShop() {

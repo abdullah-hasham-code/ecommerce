@@ -33,7 +33,7 @@
                         </div>
                         <div class="col-md-6 mb-auto">
                             <label>Shop Logo</label>
-                            <input class="form-control" type='file' (change)="upload();">
+                            <input class="form-control" type='file'id="chooseimg" (change)="readURL($event);">
                             <img id="blah" [src]="imageSrc || './../../assets/imageplaceholder/logo.jpg'" class="shopImage h-50 w-50 rounded-circle" name="imageSrc" ngDefaultControl alt="your image" [(ngModel)]="shopData.filename"/>
                         </div>
                         <div class="col-md-12">
