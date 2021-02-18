@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SellerService } from '../../seller.service';
 import { ToastService } from 'ng-uikit-pro-standard';
 import { Router } from '@angular/router';
+import { ApiService } from 'src/app/api.service';
 
 @Component({
 	selector: 'app-createshop',
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class CreateshopComponent implements OnInit {
 
-	constructor(private api: SellerService, private toast: ToastService, private router: Router) { }
+	constructor(private file:ApiService, private api: SellerService, private toast: ToastService, private router: Router) { }
 	shopData: any = {
 		shopName: "",
 		shopDescription: "",
@@ -31,9 +32,6 @@ export class CreateshopComponent implements OnInit {
 			reader.readAsDataURL(file);
 			console.log(this.imageSrc)
 		}
-		this.api.upload(this.imageSrc).subscribe(res => {
-			console.log(this.imageSrc)
-		})
 	}
 	createShop() {
 		console.log(this.imageSrc)
