@@ -32,20 +32,15 @@ export class AppService {
       return res.json();
     }));
   }
-	postFile(url: any, data: any) {
-		this.setAuthToken();
-		const headers = new Headers();
-		headers.append('enctype', 'multipart/form-data');
-		headers.append('Accept', 'application/json');
-		//headers.append('token', this.auth);
-		const options = new RequestOptions({ headers: headers });
-		return this.http.post(this.urlBase + '' + url, data, options).pipe(map((res: any) => {
-			return res.json();
-		}));
-		// .catch((error: any) => {
-		//     error = error.json();
-		//     error.request = data;
-		//     return Observable.throw(error);
-		// });
-	}
+  postFile(url: any, data: any) {
+    this.setAuthToken();
+    const headers = new Headers();
+    headers.append('enctype', 'multipart/form-data');
+    headers.append('Accept', 'application/json');
+    headers.append('token', this.auth );
+    const options = new RequestOptions({ headers: headers });
+    return this.http.post(this.urlBase + '' + url, data, options).pipe(map((res: any) => {
+      return res.json();
+    }));
+  }
 }

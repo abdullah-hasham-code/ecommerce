@@ -7,7 +7,7 @@ import { SellerComponent } from './seller.component';
 import { CreateproductComponent } from './createproduct/createproduct.component';
 
 const routes: Routes = [
-  { path: '', component: SellerComponent },
+  {path: '', component: SellerComponent },
   {path:'sellersignup',component:SellersignupComponent},
   {path:'sellerlogin',component:SellerloginComponent},
   {path:'createshop',component:CreateshopComponent},

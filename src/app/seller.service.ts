@@ -21,6 +21,9 @@ export class SellerService {
     return this.app.post('checkshopexist',object);
   }
   uploadfile(object:any){
-    return this.app.post('upload',object);
-  }
+    return this.app.postFile('upload',object);
+}
+  // uploadfile(object:any){
+  //   return this.app.post('upload',object);
+  // }
 }

@@ -19,7 +19,7 @@ exports.createshop = async (req, res) => {
     else {
         createShop = "insert into tbl_shops (userId,shopName,shopDescription,shopCategory,shopCity,shopFor,shopUrl,shopLogo) values('" + decode.id + "','" + req.body.shopName + "','" + req.body.shopDescription + "','" + req.body.shopCategory + "','" + req.body.shopCity + "','" + req.body.shopFor + "','" + req.body.shopUrl + "','" + req.body.shopLogo + "')";
         createShopRes = sequelize.query(createShop);
-        if (createShopRes) res.status(403).send({ status: "OK", message: "Your shop has been created successfully!" })
+        if (createShopRes) res.status(200).send({ status: "OK", message: "Your shop has been created successfully!" })
     }
 }
 exports.checkshopexist = async (req, res) => {

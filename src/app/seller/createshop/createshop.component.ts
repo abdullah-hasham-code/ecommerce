@@ -11,7 +11,7 @@ import { ApiService } from 'src/app/api.service';
 })
 export class CreateshopComponent implements OnInit {
 
-	constructor(private file:ApiService, private api: SellerService, private toast: ToastService, private router: Router) { }
+	constructor(private file: ApiService, private api: SellerService, private toast: ToastService, private router: Router) { }
 	shopData: any = {
 		shopName: "",
 		shopDescription: "",
@@ -19,40 +19,43 @@ export class CreateshopComponent implements OnInit {
 		shopCity: "",
 		shopFor: "",
 		shopUrl: "",
-		filename: ""
+		shopLogo:""
 	};
-	imageSrc: any;
+	fileName: any;
+	ext: any;
+	isFileUploading: any;
+	isFileUploaded: any;
+	isRequire: any;
+	imagesInProcess = false;
+	showProcessingLoader = false;
+	firstTimeUploading = false;
+	filePath: any = [];
 	ngOnInit(): void {
 	}
-	readURL(event: any) {
-		let formData = new FormData();
-		var files: any = event.target.files;
-		var filePath:any;
-		if (files.length > 0) {
-			var allowedTypes = ['png', 'jpeg','jpg','JPG','JPEG','PNG'];
-			var filePathLengthBeforeImages = filePath.length;
-			for (let i = 0; i < files.length; i++) {
-			  if (allowedTypes.indexOf(files[i].name.split('.').pop()) == -1) { 
-				(<HTMLInputElement>document.getElementById('chooseimg')).value = ''; 
-				this.toast.error('error', 'Sorry, Only png and jpeg files are allowed!(IN)'); return false; }
-			}
-		// if (event.target.files && event.target.files[0]) {
-		// 	const file = event.target.files[0];
-		// 	const reader = new FileReader();
-		// 	reader.onload = e => this.imageSrc = reader.result;
-		// 	reader.readAsDataURL(file);
-		// 	this.api.uploadfile(this.imageSrc).subscribe(res=>{
-		// 		console.log(res)
-		// 	})
-		// }
-		}
-	}
 	createShop() {
-		console.log(this.imageSrc)
+		console.log(this.shopData)
 		this.api.createshop(this.shopData).subscribe(res => {
-			if (res.status == 403) {
-				// this.router.navigateByUrl('')
+			if (res.message == 'Your shop has been created successfully!') {
+				this.router.navigateByUrl('seller/createproduct')
 			}
 		})
 	}
+	uploadFile(event: any, type: any) {
+		let formData = new FormData();
+		var files: any = event.target.files;
+		console.log(event.target.files)
+		if (files.length > 0) {
+			var allowedTypes = ['png', 'jpeg', 'jpg', 'JPG', 'JPEG', 'PNG'];
+			formData = new FormData();
+			formData.append("file", files[0]);
+			console.log(formData)
+			this.api.uploadfile(formData).subscribe(res => {
+				if(res.fileUrl!='' && res.fileUrl!=null && res.fileUrl!=undefined){
+					this.shopData.shopLogo = res.fileUrl;
+				}
+			}, (err) => {
+				console.log('Internal server error, please try again later');
+			});
+		};
+	};
 }

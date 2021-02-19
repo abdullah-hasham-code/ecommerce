@@ -36,9 +36,10 @@ export class SellerloginComponent implements OnInit {
 			if(res.message=='Login successfully!'){
 				localStorage.setItem('token', res.data);
 				var token:any = localStorage.getItem("token");
-				this.api.checkshopexist({x:token}).subscribe(res2=>{
-					if(res2.status=="OK") this.router.navigateByUrl('seller/createproduct');
-					else if(res2.status=="FAIL") this.router.navigateByUrl('seller/createshop');
+				this.api.checkshopexist({x:token}).subscribe(res=>{
+					if(res.message=="No shop found!") this.router.navigateByUrl('seller/createshop');
+					else this.router.navigateByUrl('seller/createproduct');
+					 
 				});
 				this.toast.info(res.message,"Success");
 			} else 
