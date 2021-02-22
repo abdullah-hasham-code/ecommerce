@@ -2,7 +2,7 @@ var Sequelize = require('sequelize');
 var sequelize = require('../sequelizeConfig').sequelizeConfig;
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
-var multer  = require('multer')
+var multer = require('multer')
 var upload = multer({ dest: '../../src/assets/shopimages' })
 exports.createshop = async (req, res) => {
     var decode = jwt.decode(req.headers.token, "secret");
@@ -12,7 +12,7 @@ exports.createshop = async (req, res) => {
     if (req.body.shopCity == '') res.status(200).send({ status: "OK", message: "Please fill the Shop City" });
     if (req.body.shopFor == '') res.status(200).send({ status: "OK", message: "Please fill the Shop For" });
     if (req.body.shopLogo == '') res.status(200).send({ status: "OK", message: "Please fill the Shop Url" });
-    if ( req.file == '') res.status(200).send({ status: "OK", message: "Please fill the Shop Logo" });
+    if (req.file == '') res.status(200).send({ status: "OK", message: "Please fill the Shop Logo" });
     checkShopExist = "select * from tbl_shops where shopName='" + req.body.shopName + "'";
     checkShopExistRes = await sequelize.query(checkShopExist, { type: Sequelize.QueryTypes.SELECT });
     if (checkShopExistRes.length > 0) res.status(403).send({ status: "OK", message: "There is another shop exist " })
@@ -28,6 +28,14 @@ exports.checkshopexist = async (req, res) => {
     checkShopExistRes = await sequelize.query(checkShopExist, { type: Sequelize.QueryTypes.SELECT });
     if (checkShopExistRes.length > 0) res.status(200).send({ status: "OK", message: "shop found!" });
     else res.send({ status: "FAIL", message: "No shop found!" });
+}
+exports.getallshops = async (req, res) => {
+    shopsQuery = "select * from tbl_shops";
+    if (req.body.shopId) shopsQuery += " where shopId=" + req.body.shopId;
+    shopsQuery += " ORDER BY shopId desc";
+    shopsRes = await sequelize.query(shopsQuery, { type: sequelize.QueryTypes.SELECT });
+    if (shopsRes.length > 0) res.status(200).send({ status: "OK", message: "Shops fetched successfully!", data: shopsRes });
+    else res.status(403).send({ status: "OK", message: "No shops found!" });
 }
 exports.createproduct = async (req, res) => {
     if (req.body.productName == '' || req.body.productName == undefined || req.body.productName == null) res.status(200).send({ status: "OK", message: "Please fill Product Name" });
@@ -47,6 +55,18 @@ exports.createproduct = async (req, res) => {
         if (createProdRes) res.status(403).send({ status: "OK", message: "Product has been created successfully!" });
         else res.status(403).send({ status: "OK", message: "Error creating the product" })
     }
+}
+exports.getallproducts = async (req, res) => {
+    limit=10,offset=0
+    prodQuery = "select * from tbl_products";
+    if (req.body.productId) prodQuery += " where productId=" + req.body.productId;
+    if(req.body.limit) limit=req.body.limit;
+    if(req.body.offset) offset=req.body.offset;
+    prodQuery += " ORDER BY productId desc limit "+limit+" offset "+offset+"";
+    console.log(prodQuery);
+    prodRes = await sequelize.query(prodQuery, { type: sequelize.QueryTypes.SELECT });
+    if (prodRes.length > 0) res.status(200).send({ status: "OK", message: "Products fetched successfully!", data: prodRes });
+    else res.status(403).send({ status: "OK", message: "No products found!" });
 }
 exports.getproductbycategoryname = async (req, res) => {
     if (req.body.categoryName == '' || req.body.categoryName == undefined || req.body.categoryName == null) res.status(200).send({ status: "OK", message: "Please fill Category Name" });

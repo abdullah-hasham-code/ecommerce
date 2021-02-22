@@ -26,8 +26,10 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage });
 var router = () => {
     shoproute.route('/createshop').post(authController.authToken, function (req, res) {
-        console.log(req.file)
         shopController.createshop(req, res);
+    })
+    shoproute.route('/getallshops').post(function (req, res) {
+        shopController.getallshops(req, res);
     })
     shoproute.route('/checkshopexist').post(authController.authToken, function (req, res) {
         shopController.checkshopexist(req, res);
@@ -37,6 +39,9 @@ var router = () => {
     })
     shoproute.route('/createproduct').post(authController.authToken, function (req, res) {
         shopController.createproduct(req, res);
+    })
+    shoproute.route('/getallproducts').post(function (req, res) {
+        shopController.getallproducts(req, res);
     })
     shoproute.route('/createcategory').post(authController.authToken, function (req, res) {
         shopController.createcategory(req, res);
