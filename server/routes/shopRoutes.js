@@ -9,7 +9,7 @@ var storage = multer.diskStorage({
         cb(null, './assets/');
     },
     filename: (req, file, cb) => {
-        console.log(file);
+        console.log(req.filename)
         var filetype = '';
         if (file.mimetype === 'image/gif') {
             filetype = 'gif';
@@ -46,16 +46,16 @@ var router = () => {
     shoproute.route('/createcategory').post(authController.authToken, function (req, res) {
         shopController.createcategory(req, res);
     })
-    shoproute.route('/getproductbycategoryname').post(authController.authToken, function (req, res) {
-        shopController.getproductbycategoryname(req, res);
+    shoproute.route('/getproductbycategoryid').post(authController.authToken, function (req, res) {
+        shopController.getproductbycategoryid(req, res);
     })
     shoproute.route('/getallcategories').post(authController.authToken, function (req, res) {
         shopController.getallcategories(req, res);
     })
     shoproute.route('/upload').post(authController.authToken, upload.single('file'), function (req, res) {
-        console.log(req.file);
         if (!req.file) {
-            res.status(500);
+            res.status(403).send({status:"Fail",message:"Please select File"});
+            return;
         }
         res.send({ fileUrl: 'http://localhost:3030/assets/' + req.file.filename });
     })

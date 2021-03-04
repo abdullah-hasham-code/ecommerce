@@ -13,4 +13,13 @@ export class BuyerService {
   buyerlogin(object:any){
     return this.app.post('buyerlogin',object);
   }
+  getallcategories(object:any){
+    return this.app.post('getallcategories',object);
+  }
+  getallproducts(object:any){
+    return this.app.post('getallproducts',object);
+  }
+  getproductbycategoryid(object:any){
+    return this.app.post('getproductbycategoryid',object);
+  }
 }
