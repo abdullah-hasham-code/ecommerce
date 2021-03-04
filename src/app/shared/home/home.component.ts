@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ToastService } from 'ng-uikit-pro-standard';
+import { ToastService } from 'ng-uikit-pro-standard'; 
+import { MatPaginator } from '@angular/material/paginator'; 
+import { MatTableDataSource } from '@angular/material/table'; 
+import { Platform } from '@angular/cdk/platform';
 import { Router } from '@angular/router';
 import { BuyerService } from 'src/app/buyer.service';
 
@@ -10,12 +13,13 @@ import { BuyerService } from 'src/app/buyer.service';
 })
 export class HomeComponent implements OnInit {
 
-	constructor(private buyer: BuyerService,private router:Router) { }
+	constructor(private buyer: BuyerService,private router:Router,private paginator: MatPaginator) { }
 	categories: any = {};
 	products: any = {};
 	allCategories: any = [];
 	allProducts: any = [];
 	selectedCategories:any=[];
+	dataSource = new MatTableDataSource();
 	ngOnInit(): void {
 		this.getallcategories();
 		this.getallproducts();
@@ -32,11 +36,6 @@ export class HomeComponent implements OnInit {
 	}
 	getproductbycategoryid(id:any){
 		this.buyer.getproductbycategoryid({categoryId:id}).subscribe(res=>{
-			if(res.message=="No products found!"){
-				this.selectedCategories=[];
-			}else{
-				this.selectedCategories=res.data;
-			}
 		})
 		this.router.navigateByUrl('/shared/categoryproduct/id')
 	}
