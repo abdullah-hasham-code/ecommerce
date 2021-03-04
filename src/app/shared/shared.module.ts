@@ -4,10 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { SharedRoutingModule } from './shared-routing.module';
 import { SharedComponent } from './shared.component';
 import { HomeComponent } from './home/home.component';
+import { CategoryproductComponent } from './categoryproduct/categoryproduct.component';
 
 
 @NgModule({
-  declarations: [SharedComponent, HomeComponent],
+  declarations: [SharedComponent, HomeComponent, CategoryproductComponent],
   imports: [
     FormsModule,
     CommonModule,

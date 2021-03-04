@@ -95,7 +95,7 @@
         <div class="row">
             <div class="col-md-3">
                 <nav class="navbar bg-light">
-                    <ul class="navbar-nav" *ngFor="let category of allCategories">
+                    <ul class="navbar-nav" *ngFor="let category of allCategories;">
                         <li class="nav-item"  (click)="getproductbycategoryid(category.categoryId)">
                             <a class="nav-link"><i class="fa fa-home"></i>{{category.categoryName}}</a>
                         </li>
@@ -275,13 +275,13 @@
 <div class="featured-product product">
     <div class="container-fluid">
         <div class="section-header">
-            <h1>Featured Product</h1>
+            <h1>Category Product</h1>
         </div>
         <div class="row align-items-center product-slider product-slider-4">
-            <div class="col-lg-3 mt-3" *ngFor="let products of allProducts">
+            <div class="col-lg-3 mt-3" *ngFor="let categories of selectedCategories">
                 <div class="product-item">
                     <div class="product-title">
-                        <a href="#">{{products.productName}}</a>
+                        <a href="#">{{categories.productName}}</a>
                         <div class="ratting">
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>
@@ -292,7 +292,7 @@
                     </div>
                     <div class="product-image">
                         <a href="product-detail.html">
-                            <img src="{{products.productImage1}}" alt="Product Image">
+                            <img src="{{categories.productImage1}}" alt="Product Image">
                         </a>
                         <div class="product-action">
                             <a href="#"><i class="fa fa-cart-plus"></i></a>
@@ -301,17 +301,20 @@
                         </div>
                     </div>
                     <div class="product-price">
-                        <h3><span>$</span>{{products.ourPrice}}</h3>
+                        <h3><span>$</span>{{categories.ourPrice}}</h3>
                         <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy Now</a>
                     </div>
                 </div>
+            </div>
+            <div class="row align-items-center product-slider product-slider-4" *ngIf="selectedCategories.length==0">
+                <img src="assets/staticimg/no-record-found.png" alt="">
             </div>
         </div>
     </div>
 </div>
 <!-- Featured Product End -->
 <!-- Newsletter Start -->
-<div class="newsletter">
+<!-- <div class="newsletter">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
@@ -325,10 +328,10 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <!-- Newsletter End -->
 <!-- Recent Product Start -->
-<div class="recent-product product">
+<!-- <div class="recent-product product">
     <div class="container-fluid">
         <div class="section-header">
             <h1>Recent Product</h1>
@@ -476,10 +479,10 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <!-- Recent Product End -->
 <!-- Review Start -->
-<div class="review">
+<!-- <div class="review">
     <div class="container-fluid">
         <div class="row align-items-center review-slider normal-slider">
             <div class="col-md-6">
@@ -550,7 +553,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <!-- Review End -->
 <!-- Footer Start -->
 <div class="footer">

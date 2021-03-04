@@ -10,7 +10,7 @@ import { BuyerService } from 'src/app/buyer.service';
 })
 export class HomeComponent implements OnInit {
 
-	constructor(private buyer: BuyerService) { }
+	constructor(private buyer: BuyerService,private router:Router) { }
 	categories: any = {};
 	products: any = {};
 	allCategories: any = [];
@@ -31,8 +31,8 @@ export class HomeComponent implements OnInit {
 	}
 	getproductbycategoryid(id:any){
 		this.buyer.getproductbycategoryid({categoryId:id}).subscribe(res=>{
-			console.log(res)
 		})
+		this.router.navigateByUrl('/shared/categoryproduct/id')
 	}
 
 }
