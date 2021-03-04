@@ -14,7 +14,7 @@ export class CategoryproductComponent implements OnInit {
 	categories: any = {};
 	products: any = {};
 	allCategories: any = [];
-  selectedCategories:any=[];
+  	selectedCategories:any=[];
 	allProducts: any = [];
   ngOnInit(): void {
     this.getallcategories();
