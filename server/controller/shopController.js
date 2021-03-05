@@ -59,8 +59,6 @@ exports.createproduct = async (req, res) => {
 exports.getallproducts = async (req, res) => {
     limit = 10, offset = 0
     prodQuery = "select * from tbl_products";
-    if (req.body.productId) prodQuery += " where productId=" + req.body.productId;
-    if (req.body.categoryId) prodQuery += " where categoryId=" + req.body.categoryId;
     if (req.body.limit) limit = req.body.limit;
     if (req.body.offset) offset = req.body.offset;
     prodQuery += " ORDER BY productId desc limit " + limit + " offset " + offset + "";
@@ -69,16 +67,17 @@ exports.getallproducts = async (req, res) => {
     if (prodRes.length > 0) res.status(200).send({ status: "OK", message: "Products fetched successfully!", count: prodRes.length, data: prodRes });
     else res.status(403).send({ status: "OK", message: "No products found!" });
 }
-exports.getproductbycategoryid = async (req, res) => {
+exports.getproduct = async (req, res) => {
     var limit = 10, offset = 0
     if (req.body.limit) limit = req.body.limit;
     if (req.body.offset) offset = req.body.offset;
     var prodQuery = "select * from tbl_products";
-    if (req.body.id || req.body.categoryId || req.body.productName) prodQuery += " where "
-    if (req.body.id) prodQuery += "productId=" + req.body.id;
-    if (req.body.id && req.body.categoryId) prodQuery += " AND "
+    if (req.body.productId || req.body.categoryId || req.body.productName) prodQuery += " where "
+    if (req.body.productId) prodQuery += "productId=" + req.body.productId;
+    console.log(prodQuery);
+    if (req.body.productId && req.body.categoryId) prodQuery += " AND "
     if (req.body.categoryId) prodQuery += "categoryId=" + req.body.categoryId;
-    if ((req.body.id || req.body.categoryId) && req.body.productName) prodQuery += " AND "
+    if ((req.body.productId || req.body.categoryId) && req.body.productName) prodQuery += " AND "
     if (req.body.productName) prodQuery += " productName=" + req.body.categoryId;
     prodQuery += " ORDER BY productId desc limit " + limit + " offset " + offset + "";
     prodRes = await sequelize.query(prodQuery, { type: sequelize.QueryTypes.SELECT });

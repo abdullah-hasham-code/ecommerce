@@ -17,7 +17,6 @@ export class HomeComponent implements OnInit {
 	allProducts: any = [];
 	selectedCategories:any=[];
 	ngOnInit(): void {
-	
 		this.getallcategories();
 		this.getallproducts();
 	}
@@ -31,11 +30,16 @@ export class HomeComponent implements OnInit {
 			this.allProducts = res.data;
 		})
 	}
-	getproductbycategoryid(id:any){
-		this.buyer.getproductbycategoryid({categoryId:id}).subscribe(res=>{
+	getproduct(id:any){
+		this.buyer.getproduct({categoryId:id}).subscribe(res=>{
 		})
 		
 		this.router.navigateByUrl('/shared/categoryproduct/'+id)
+	}
+	getproductbyproductid(id:any){
+		this.buyer.getproduct({productId:id}).subscribe(res=>{
+			this.router.navigateByUrl('/shared/productdetail/'+id)
+		})
 	}
 
 }

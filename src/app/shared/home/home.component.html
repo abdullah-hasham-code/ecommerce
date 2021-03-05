@@ -96,7 +96,7 @@
             <div class="col-md-3">
                 <nav class="navbar bg-light">
                     <ul class="navbar-nav" *ngFor="let category of allCategories">
-                        <li class="nav-item"  (click)="getproductbycategoryid(category.categoryId)">
+                        <li class="nav-item"  (click)="getproduct(category.categoryId)">
                             <a class="nav-link"><i class="fa fa-home"></i>{{category.categoryName}}</a>
                         </li>
                     </ul>
@@ -302,7 +302,7 @@
                     </div>
                     <div class="product-price">
                         <h3><span>$</span>{{products.ourPrice}}</h3>
-                        <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy Now</a>
+                        <a class="btn" (click)="getproductbyproductid(products.productId)"><i class="fa fa-shopping-cart"></i>Buy Now</a>
                     </div>
                 </div>
             </div>

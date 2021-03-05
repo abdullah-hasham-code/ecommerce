@@ -19,7 +19,7 @@ export class BuyerService {
   getallproducts(object:any){
     return this.app.post('getallproducts',object);
   }
-  getproductbycategoryid(object:any){
-    return this.app.post('getproductbycategoryid',object);
+  getproduct(object:any){
+    return this.app.post('getproduct',object);
   }
 }

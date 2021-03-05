@@ -46,8 +46,8 @@ var router = () => {
     shoproute.route('/createcategory').post(authController.authToken, function (req, res) {
         shopController.createcategory(req, res);
     })
-    shoproute.route('/getproductbycategoryid').post(authController.authToken, function (req, res) {
-        shopController.getproductbycategoryid(req, res);
+    shoproute.route('/getproduct').post(authController.authToken, function (req, res) {
+        shopController.getproduct(req, res);
     })
     shoproute.route('/getallcategories').post(authController.authToken, function (req, res) {
         shopController.getallcategories(req, res);

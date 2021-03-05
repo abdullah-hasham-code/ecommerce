@@ -34,7 +34,7 @@ export class CategoryproductComponent implements OnInit {
 		})
 	}
 	getproductbycategoryid(id: any) {
-		this.buyer.getproductbycategoryid({ categoryId: id }).subscribe(res => {
+		this.buyer.getproduct({ categoryId: id }).subscribe(res => {
 			if (res.message == "No products found!") {
 				this.selectedCategories = [];
 			} else {
