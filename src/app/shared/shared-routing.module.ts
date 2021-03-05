@@ -9,7 +9,8 @@ import { SharedComponent } from './shared.component';
 const routes: Routes = [
   { path: '', component: SharedComponent },
   { path: 'home', component: HomeComponent },
-  { path: 'categoryproduct/:key', component: CategoryproductComponent }
+  { path: 'categoryproduct/:key', component: CategoryproductComponent },
+  { path: 'categoryproduct', component: CategoryproductComponent }
 ];
 
 @NgModule({

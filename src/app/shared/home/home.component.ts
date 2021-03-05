@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ToastService } from 'ng-uikit-pro-standard'; 
-import { MatPaginator } from '@angular/material/paginator'; 
-import { MatTableDataSource } from '@angular/material/table'; 
-import { Platform } from '@angular/cdk/platform';
-import { Router } from '@angular/router';
+import { ToastService } from 'ng-uikit-pro-standard'; ; 
+import { ActivatedRoute, Router } from '@angular/router';
 import { BuyerService } from 'src/app/buyer.service';
 
 @Component({
@@ -13,14 +10,14 @@ import { BuyerService } from 'src/app/buyer.service';
 })
 export class HomeComponent implements OnInit {
 
-	constructor(private buyer: BuyerService,private router:Router,private paginator: MatPaginator) { }
+	constructor(private buyer: BuyerService,private router:Router) { }
 	categories: any = {};
 	products: any = {};
 	allCategories: any = [];
 	allProducts: any = [];
 	selectedCategories:any=[];
-	dataSource = new MatTableDataSource();
 	ngOnInit(): void {
+	
 		this.getallcategories();
 		this.getallproducts();
 	}
@@ -37,7 +34,8 @@ export class HomeComponent implements OnInit {
 	getproductbycategoryid(id:any){
 		this.buyer.getproductbycategoryid({categoryId:id}).subscribe(res=>{
 		})
-		this.router.navigateByUrl('/shared/categoryproduct/id')
+		
+		this.router.navigateByUrl('/shared/categoryproduct/'+id)
 	}
 
 }

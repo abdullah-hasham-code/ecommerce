@@ -96,7 +96,7 @@
             <div class="col-md-3">
                 <nav class="navbar bg-light">
                     <ul class="navbar-nav" *ngFor="let category of allCategories;">
-                        <li class="nav-item"  (click)="getproductbycategoryid(category.categoryId)">
+                        <li class="nav-item"  (click)="redirectwithId(category.categoryId)">
                             <a class="nav-link"><i class="fa fa-home"></i>{{category.categoryName}}</a>
                         </li>
                     </ul>
