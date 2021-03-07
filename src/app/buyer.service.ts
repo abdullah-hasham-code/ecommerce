@@ -22,4 +22,7 @@ export class BuyerService {
   getproduct(object:any){
     return this.app.post('getproduct',object);
   }
+  getproductreviews(object:any){
+    return this.app.post('getproductreviews',object);
+  }
 }

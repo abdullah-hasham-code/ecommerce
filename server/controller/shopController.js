@@ -57,12 +57,11 @@ exports.createproduct = async (req, res) => {
     }
 }
 exports.getallproducts = async (req, res) => {
-    limit = 10, offset = 0
+    limit = 10, offset = 0;
     prodQuery = "select * from tbl_products";
     if (req.body.limit) limit = req.body.limit;
     if (req.body.offset) offset = req.body.offset;
     prodQuery += " ORDER BY productId desc limit " + limit + " offset " + offset + "";
-    console.log(prodQuery.length)
     prodRes = await sequelize.query(prodQuery, { type: sequelize.QueryTypes.SELECT });
     if (prodRes.length > 0) res.status(200).send({ status: "OK", message: "Products fetched successfully!", count: prodRes.length, data: prodRes });
     else res.status(403).send({ status: "OK", message: "No products found!" });
@@ -72,9 +71,10 @@ exports.getproduct = async (req, res) => {
     if (req.body.limit) limit = req.body.limit;
     if (req.body.offset) offset = req.body.offset;
     var prodQuery = "select * from tbl_products";
-    if (req.body.productId || req.body.categoryId || req.body.productName) prodQuery += " where "
+    if (req.body.productId || req.body.shopId || req.body.categoryId || req.body.productName) prodQuery += " where "
     if (req.body.productId) prodQuery += "productId=" + req.body.productId;
-    console.log(prodQuery);
+    if (req.body.shopId) prodQuery += "shopId=" + req.body.shopId;
+    console.log(prodQuery)
     if (req.body.productId && req.body.categoryId) prodQuery += " AND "
     if (req.body.categoryId) prodQuery += "categoryId=" + req.body.categoryId;
     if ((req.body.productId || req.body.categoryId) && req.body.productName) prodQuery += " AND "
@@ -83,6 +83,16 @@ exports.getproduct = async (req, res) => {
     prodRes = await sequelize.query(prodQuery, { type: sequelize.QueryTypes.SELECT });
     if (prodRes.length > 0) res.status(200).send({ status: "OK", message: "Products fetched successfully!", count: prodRes.length, data: prodRes });
     else res.status(200).send({ status: "FAIL", message: "No products found!" });
+}
+exports.getproductreviews = async (req, res) => {
+    limit = 10, offset = 0;
+    if (req.body.limit) limit = req.body.limit;
+    if (req.body.offset) offset = req.body.offset;
+    reviewQuery = "select * from tbl_reviews";
+    if (req.body.productId) reviewQuery += " where productId=" + req.body.productId;
+    reviewRes = await sequelize.query(reviewQuery, { type: sequelize.QueryTypes.SELECT });
+    if (reviewRes.length > 0) res.status(200).send({ status: "OK", message: "Reviews fetched successfully!", count: reviewRes.length, data: reviewRes });
+    else res.status(403).send({ status: "OK", message: "No reviews found!" });    
 }
 exports.createcategory = async (req, res) => {
     if (req.body.categoryName == '' || req.body.categoryName == undefined || req.body.categoryName == null) {
