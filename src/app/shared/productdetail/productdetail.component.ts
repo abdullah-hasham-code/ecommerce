@@ -11,21 +11,22 @@ export class ProductdetailComponent implements OnInit {
 
 	constructor(private buyer: BuyerService, private router: Router, private route: ActivatedRoute) { }
 	productId = '';
-	productDetail: any = [];
+	product: any = {};
 	reviewDetail: any = [];
 	suggestedProduct: any = [];
 	totalReview = '';
-	shopId='';
 	ngOnInit(): void {
 		this.productId = JSON.parse(JSON.stringify(this.route.params))["_value"]["key"];
+		//one more method for get data from route below commented
+		// console.log(JSON.parse(JSON.stringify(this.route.params))._value.key);
 		this.getproductbyproductid(this.productId);
 		this.getproductreviews(this.productId);
-		this.getsuugestedproduct();
 	}
 	getproductbyproductid(id: any) {
 		this.buyer.getproduct({ productId: id }).subscribe(res => {
-			this.productDetail = res.data;
-			this.router.navigateByUrl('/shared/productdetail/' + id)
+			this.product = res.data[0];
+			this.getsuugestedproduct(this.product.shopId);
+			this.router.navigateByUrl('/shared/productdetail/' + id);
 		})
 	}
 	getproductreviews(id: any) {
@@ -34,8 +35,8 @@ export class ProductdetailComponent implements OnInit {
 			this.totalReview = res.count;
 		})
 	}
-	getsuugestedproduct() {
-		this.buyer.getproduct( this.shopId ).subscribe(res => {
+	getsuugestedproduct(shopId: any) {
+		this.buyer.getproduct({ shopId: shopId }).subscribe(res => {
 			this.suggestedProduct = res.data;
 		})
 	}
