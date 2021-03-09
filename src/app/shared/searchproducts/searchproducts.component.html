@@ -30,7 +30,7 @@
                     <a href="product-detail.html" class="nav-item nav-link">Product Detail</a>
                     <a href="cart.html" class="nav-item nav-link">Cart</a>
                     <a href="checkout.html" class="nav-item nav-link">Checkout</a>
-                    <a href="my-account.html" class="nav-item nav-link" *ngIf="detail!=null">{{detail}}</a>
+                    <a href="my-account.html" class="nav-item nav-link">My Account</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">More Pages</a>
                         <div class="dropdown-menu">
@@ -42,8 +42,7 @@
                 </div>
                 <div class="navbar-nav ml-auto">
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" *ngIf="detail!=null">{{detail}}</a>
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" *ngIf="detail==null">My Account</a>
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">My Account</a>
                         <div class="dropdown-menu">
                             <a href="#" routerLink="../..//buyer/buyerlogin" routerLinkActive="active"
                                 class="dropdown-item">Login</a>
@@ -70,8 +69,8 @@
             </div>
             <div class="col-md-6">
                 <div class="search">
-                    <input type="text" placeholder="Search" [(ngModel)]="productName">
-                    <button (click)="searchProduct()"><i class="fa fa-search"></i></button>
+                    <input type="text" placeholder="Search" [(ngModel)]="procductSearch">
+                    <button (click)="getProductbySearch()"><i class="fa fa-search"></i></button>
                 </div>
             </div>
             <div class="col-md-3">
@@ -96,8 +95,9 @@
         <div class="row">
             <div class="col-md-3">
                 <nav class="navbar bg-light">
-                    <ul class="navbar-nav" *ngFor="let category of allCategories">
-                        <li class="nav-item"  (click)="getproduct(category.categoryId)">
+                    <ul class="navbar-nav" *ngFor="let category of allCategories;">
+                        <!-- (click)="redirectwithId(category.categoryId)" -->
+                        <li class="nav-item">
                             <a class="nav-link"><i class="fa fa-home"></i>{{category.categoryName}}</a>
                         </li>
                     </ul>
@@ -276,10 +276,10 @@
 <div class="featured-product product">
     <div class="container-fluid">
         <div class="section-header">
-            <h1>Featured Product</h1>
+            <h1>Searched Product</h1>
         </div>
         <div class="row align-items-center product-slider product-slider-4">
-            <div class="col-lg-3 mt-3" *ngFor="let products of allProducts">
+            <div class="col-lg-3 mt-3" *ngFor="let products of searchedproduct">
                 <div class="product-item">
                     <div class="product-title">
                         <a href="#">{{products.productName}}</a>
@@ -303,24 +303,19 @@
                     </div>
                     <div class="product-price">
                         <h3><span>$</span>{{products.ourPrice}}</h3>
-                        <a class="btn" (click)="getproductbyproductid(products.productId)"><i class="fa fa-shopping-cart"></i>Buy Now</a>
+                        <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy Now</a>
                     </div>
                 </div>
             </div>
-            <div class="row m-auto align-items-center" *ngIf="allProducts.length==0">
-                <p class="text-center">No products found!</p>
+            <div class="row align-items-center product-slider product-slider-4 w-100" *ngIf="searchedproduct.length==0">
+                <img src="assets/staticimg/no-record-found.png" class="m-auto" alt="">
             </div>
-        </div>
-        <!-- <div class="row align-items-center product-slider product-slider-4 w-100" *ngIf="selectedCategories.length==0">
-            <img src="assets/staticimg/no-record-found.png" class="m-auto" alt="">
-        </div> -->
-        <div>
         </div>
     </div>
 </div>
 <!-- Featured Product End -->
 <!-- Newsletter Start -->
-<div class="newsletter">
+<!-- <div class="newsletter">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
@@ -334,10 +329,10 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <!-- Newsletter End -->
 <!-- Recent Product Start -->
-<div class="recent-product product">
+<!-- <div class="recent-product product">
     <div class="container-fluid">
         <div class="section-header">
             <h1>Recent Product</h1>
@@ -485,10 +480,10 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <!-- Recent Product End -->
 <!-- Review Start -->
-<div class="review">
+<!-- <div class="review">
     <div class="container-fluid">
         <div class="row align-items-center review-slider normal-slider">
             <div class="col-md-6">
@@ -559,7 +554,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <!-- Review End -->
 <!-- Footer Start -->
 <div class="footer">

@@ -11,7 +11,8 @@ import { BuyerService } from 'src/app/buyer.service';
 export class HomeComponent implements OnInit {
 
 	constructor(private buyer: BuyerService,private router:Router) { }
-	categories: any = {};
+	detail:any=null;
+	productName:any='';
 	products: any = {};
 	allCategories: any = [];
 	allProducts: any = [];
@@ -19,10 +20,13 @@ export class HomeComponent implements OnInit {
 	ngOnInit(): void {
 		this.getallcategories();
 		this.getallproducts();
+		this.detail = localStorage.getItem('detail');
 	}
 	getallcategories() {
-		this.buyer.getallcategories(this.categories).subscribe(res => {
+		this.buyer.getallcategories({}).subscribe(res => {
 			this.allCategories = res.data;
+		},(err)=>{
+			console.log(err)
 		})
 	}
 	getallproducts() {
@@ -34,12 +38,15 @@ export class HomeComponent implements OnInit {
 		this.buyer.getproduct({categoryId:id}).subscribe(res=>{
 		})
 		
-		this.router.navigateByUrl('/shared/categoryproduct/'+id)
+		this.router.navigateByUrl('/shared/categoryproduct/'+id);
 	}
 	getproductbyproductid(id:any){
 		this.buyer.getproduct({productId:id}).subscribe(res=>{
 			this.router.navigateByUrl('/shared/productdetail/'+id)
 		})
+	}
+	searchProduct(){
+		this.router.navigateByUrl('/shared/searchproducts/'+this.productName);
 	}
 
 }

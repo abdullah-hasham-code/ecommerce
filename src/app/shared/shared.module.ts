@@ -6,10 +6,11 @@ import { SharedComponent } from './shared.component';
 import { HomeComponent } from './home/home.component';
 import { CategoryproductComponent } from './categoryproduct/categoryproduct.component';
 import { ProductdetailComponent } from './productdetail/productdetail.component';
+import { SearchproductsComponent } from './searchproducts/searchproducts.component';
 
 
 @NgModule({
-  declarations: [SharedComponent, HomeComponent, CategoryproductComponent, ProductdetailComponent],
+  declarations: [SharedComponent, HomeComponent, CategoryproductComponent, ProductdetailComponent, SearchproductsComponent],
   imports: [
     FormsModule,
     CommonModule,

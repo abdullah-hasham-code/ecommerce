@@ -46,14 +46,14 @@ var router = () => {
     shoproute.route('/createcategory').post(authController.authToken, function (req, res) {
         shopController.createcategory(req, res);
     })
-    shoproute.route('/getproduct').post(authController.authToken, function (req, res) {
+    shoproute.route('/getproduct').post(function (req, res) {
         shopController.getproduct(req, res);
     })
     shoproute.route('/getproductreviews').post(authController.authToken, function (req, res) {
         shopController.getproductreviews(req, res);
     })
-    shoproute.route('/getallcategories').post(authController.authToken, function (req, res) {
-        shopController.getallcategories(req, res);
+    shoproute.route('/getallcategories').post(function (req,res) {
+        shopController.getallcategories(req,res);
     })
     shoproute.route('/upload').post(authController.authToken, upload.single('file'), function (req, res) {
         if (!req.file) {

@@ -24,7 +24,7 @@ export class CategoryproductComponent implements OnInit {
 		else this.router.navigateByUrl('/shared/home')
 	}
 	getallcategories() {
-		this.buyer.getallcategories(this.categories).subscribe(res => {
+		this.buyer.getallcategories({}).subscribe(res => {
 			this.allCategories = res.data;
 		})
 	}
