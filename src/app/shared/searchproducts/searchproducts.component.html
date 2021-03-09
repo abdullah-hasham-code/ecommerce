@@ -279,7 +279,7 @@
             <h1>Searched Product</h1>
         </div>
         <div class="row align-items-center product-slider product-slider-4">
-            <div class="col-lg-3 mt-3" *ngFor="let products of searchedproduct">
+            <div class="col-lg-3 mt-3" *ngFor="let products of searchedProduct">
                 <div class="product-item">
                     <div class="product-title">
                         <a href="#">{{products.productName}}</a>
@@ -307,9 +307,9 @@
                     </div>
                 </div>
             </div>
-            <div class="row align-items-center product-slider product-slider-4 w-100" *ngIf="searchedproduct.length==0">
-                <img src="assets/staticimg/no-record-found.png" class="m-auto" alt="">
-            </div>
+        </div>
+        <div class="row align-items-center" *ngIf="searchedProduct.length==0">
+            <p class="text-center m-auto">No products found!</p>
         </div>
     </div>
 </div>

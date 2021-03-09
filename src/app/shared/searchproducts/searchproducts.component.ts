@@ -11,9 +11,8 @@ export class SearchproductsComponent implements OnInit {
 
   constructor(private buyer: BuyerService,private router:Router,private route:ActivatedRoute) { }
   productName='';
-  searchedproduct:any=[];
+  searchedProduct:any=[];
   allCategories: any = [];
-  activeroute:any=JSON.parse(JSON.stringify(this.route.params))._value.key;
   ngOnInit(): void {
     this.productName=JSON.parse(JSON.stringify(this.route.params))._value.key;
     this.getallcategories();
@@ -27,7 +26,7 @@ export class SearchproductsComponent implements OnInit {
 	}
   getproductbyName() {
 		this.buyer.getproduct({ productName: this.productName }).subscribe(res => {
-			this.searchedproduct = res.data;
+      this.searchedProduct = res.data;
 		})
 	}
   getProductbySearch(){
