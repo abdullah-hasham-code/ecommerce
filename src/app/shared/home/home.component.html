@@ -279,7 +279,7 @@
             <h1>Featured Product</h1>
         </div>
         <div class="row align-items-center product-slider product-slider-4">
-            <div class="col-lg-3 mt-3" *ngFor="let products of allProducts">
+            <div class="col-lg-3 mt-3" *ngFor="let products of allProducts | paginate: { id: 'listing_pagination',itemsPerPage: 2,currentPage: page,totalItems: totalRecords }">
                 <div class="product-item">
                     <div class="product-title">
                         <a href="#">{{products.productName}}</a>
@@ -310,6 +310,12 @@
             <div class="row m-auto align-items-center" *ngIf="allProducts.length==0">
                 <p class="text-center">No products found!</p>
             </div>
+        </div>
+        <div class="paginator">
+            <pagination-controls  id="listing_pagination" maxSize="5"
+                directionLinks="true" (pageChange)="page = $event">
+            </pagination-controls>
+            <!-- (pageChange)="page = $event" -->
         </div>
         <!-- <div class="row align-items-center product-slider product-slider-4 w-100" *ngIf="selectedCategories.length==0">
             <img src="assets/staticimg/no-record-found.png" class="m-auto" alt="">

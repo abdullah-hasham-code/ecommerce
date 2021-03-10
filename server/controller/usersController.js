@@ -67,19 +67,20 @@ exports.sellerlogin = async (req, res) => {
             statusChekRes = await sequelize.query(statusCheck, { type: Sequelize.QueryTypes.SELECT })
             if (statusChekRes.length > 0) {
                 var token = jwt.sign({ id: statusChekRes[0].id }, "secret", { expiresIn: 86400 });
-                var decode=jwt.decode(token);
+                var decode = jwt.decode(token);
                 if (token) {
-                    checkTokenExist = "select * from tbl_users,tbl_sessions where tbl_users.id="+statusChekRes[0].id+" and tbl_users.role='SELLER' and tbl_users.id=tbl_sessions.userId";
+                    checkTokenExist = "select * from tbl_users,tbl_sessions where tbl_users.id=" + statusChekRes[0].id + " and tbl_users.role='SELLER' and tbl_users.id=tbl_sessions.userId";
                     checkTokenexistRes = await sequelize.query(checkTokenExist, { type: Sequelize.QueryTypes.SELECT });
                     // console.log(checkTokenexistRes);
                     if (checkTokenexistRes.length > 0) {
                         updSession = "update tbl_sessions set session='" + token + "' where userId='" + statusChekRes[0].id + "'";
                         updsessionRes = await sequelize.query(updSession);
-                        res.status(200).send({ status: "OK", message: "Login successfully!", data:token , firstname :checkTokenexistRes[0].firstName});
+                        console.log(checkTokenexistRes)
+                        res.status(200).send({ status: "OK", message: "Login successfully!", data: token, profile: { firstname: checkTokenexistRes[0].firstName, email: checkTokenexistRes[0].email } });
                     } else {
                         insertSession = "insert into tbl_sessions(userId,session,status) values('" + statusChekRes[0].id + "','" + token + "' ,'OPEN')";
                         isertSessionRes = await sequelize.query(insertSession);
-                        res.status(200).send({ status: "OK", message: "Login successfully!", data: token , firstname :checkTokenexistRes[0].firstName });
+                        res.status(200).send({ status: "OK", message: "Login successfully!", data: token, profile: { firstname: checkTokenexistRes[0].firstName, email: checkTokenexistRes[0].email } });
                     }
                 }
             }
@@ -150,7 +151,7 @@ exports.buyerlogin = async (req, res) => {
             if (statusChekRes.length > 0) {
                 var token = jwt.sign({ id: statusChekRes[0].id }, "secret", { expiresIn: 86400 });
                 if (token) {
-                    checkTokenExist = "select * from tbl_users,tbl_sessions where tbl_users.id="+statusChekRes[0].id+" and tbl_users.role='BUYER' and tbl_users.id=tbl_sessions.userId";
+                    checkTokenExist = "select * from tbl_users,tbl_sessions where tbl_users.id=" + statusChekRes[0].id + " and tbl_users.role='BUYER' and tbl_users.id=tbl_sessions.userId";
                     checkTokenexistRes = await sequelize.query(checkTokenExist, { type: Sequelize.QueryTypes.SELECT });
                     if (checkTokenexistRes.length > 0) {
                         updSession = "update tbl_sessions set session='" + token + "' where userId='" + statusChekRes[0].id + "'";

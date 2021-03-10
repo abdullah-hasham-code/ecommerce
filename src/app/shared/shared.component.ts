@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { BuyerService } from '../buyer.service';
 
 @Component({
   selector: 'app-shared',

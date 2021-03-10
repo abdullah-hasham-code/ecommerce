@@ -14,6 +14,8 @@ export class HomeComponent implements OnInit {
 	detail:any=null;
 	productName:any='';
 	products: any = {};
+	totalRecords:number =0;
+	page:number =1
 	allCategories: any = [];
 	allProducts: any = [];
 	selectedCategories:any=[];
@@ -32,6 +34,7 @@ export class HomeComponent implements OnInit {
 	getallproducts() {
 		this.buyer.getallproducts(this.products).subscribe(res => {
 			this.allProducts = res.data;
+			this.totalRecords=res.data.length
 		})
 	}
 	getproduct(id:any){

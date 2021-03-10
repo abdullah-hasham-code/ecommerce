@@ -35,7 +35,7 @@ export class SellerloginComponent implements OnInit {
 		this.api.sellerlogin(this.loginData).subscribe(res=>{
 			if(res.message=='Login successfully!'){
 				localStorage.setItem('token', res.data);
-				localStorage.setItem('detail',res.firstname)
+				localStorage.setItem('profile',JSON.stringify(res.profile));
 				var token:any = localStorage.getItem("token");
 				this.api.checkshopexist({x:token}).subscribe(res=>{
 					if(res.message=="No shop found!") this.router.navigateByUrl('seller/createshop');
